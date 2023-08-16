@@ -1,16 +1,26 @@
+import { useContext, useEffect } from "react";
 import Proyecto from "./Proyecto";
 import ProyectoContext from "../../context/proyectos/ProyectoContext";
-import { useContext } from "react";
+
 
 
 const Listado = () => {
 
-  //Obterner los proyectos desde el proyectostate inicial
-  const proyectosContext = useContext(ProyectoContext);
-  const {proyectos} = proyectosContext;
+    //Obterner los proyectos desde el proyectostate inicial
+    const proyectosContext = useContext(ProyectoContext);
+    const {proyectos, obtenerProyectos} = proyectosContext;
 
-  //revisar si existe contenido en proyectos para mostrar
-  if(proyectos.length === 0) return null;
+    //useEffect se ejecuta una vez para cargar los arreglos
+    useEffect(() => {
+      obtenerProyectos();
+    }, []);
+
+    //revisar si existe contenido en proyectos para mostrar
+    if(proyectos.length === 0) return null;
+
+
+
+
     return ( 
 
         <ul className="listado-proyectos">

@@ -6,7 +6,12 @@ const NuevoProyecto = () => {
  
     //Obterner state del formulario desde el contexto
     const proyectosContext = useContext (ProyectoContext);
-    const {formulario, mostrarFormulario} = proyectosContext;
+    const {
+        formulario, 
+        errorformulario, 
+        mostrarFormulario, 
+        agregarProyecto, 
+        mostrarError} = proyectosContext;
 
 
     //state para la creacion de proyectos
@@ -30,10 +35,16 @@ const NuevoProyecto = () => {
         e.preventDefault();
 
         //Validar el proyecto
-
+        if(nombre === ''){
+            mostrarError();
+            return;
+        }
         //agrgar el state
-
+        agregarProyecto(proyecto)
         //Reiniciar el form
+        guardarProyecto({
+            nombre: ''
+        })
     }
 
 
@@ -82,6 +93,18 @@ const NuevoProyecto = () => {
                     (
                         null
                     )
+            }
+
+            {
+            errorformulario
+            ?
+                (
+                    <p className="mensaje error">El nombre del Proyecto + la OP son Obligatorios</p>
+                )   
+            :
+                (
+                    null
+                )
             }
 
         </Fragment>

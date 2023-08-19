@@ -1,6 +1,7 @@
 import { Fragment, useContext } from "react";
 import Cotizacion from "./Cotizacion";
 import ProyectoContext from "../../context/proyectos/ProyectoContext";
+import CotizadorContext from "../../context/cotizaciones/CotizacionContext";
 
 const ListadoCotizaciones = () => {
 
@@ -9,17 +10,15 @@ const ListadoCotizaciones = () => {
     const proyectosContext = useContext(ProyectoContext);
     const {proyectoactual, eliminarProyecto} = proyectosContext;
 
+    //obterner las cotizaciones del proyecto
+    const cotizacionesContext = useContext(CotizadorContext);
+    const {cotizacionesproyecto} = cotizacionesContext;
+
     //Si no hay proyecto Seleccionado
     if(!proyectoactual) return <h2>Selecciona un Proyecto</h2>;
 
     //Destructuring de proyecto actual seleccionado
     const [proyectoSelec] = proyectoactual;
-    
-    const cotizacionesProyecto = [
-        {nombre: 'Cotizacion 100 Licencias Business a 24 meses', estado: true},
-        {nombre: 'Cotizacion 80 Licencias Business a 36 meses', estado: true},
-        {nombre: 'Cotizacion 80 Licencias Starter a 24 meses', estado: false}
-    ];
 
     //Eliminar un proyecto Seleccionado
     const onClickEliminarProyecto = () => {
@@ -31,11 +30,11 @@ const ListadoCotizaciones = () => {
             <h2>Proyecto: {proyectoSelec.nombre}</h2>
 
             <ul className="listado-tareas">
-                {cotizacionesProyecto.length === 0
+                {cotizacionesproyecto.length === 0
                 
                     ? (<li className="tarea"><p>No Hay Cotizaciones</p></li>)
 
-                    :cotizacionesProyecto.map(
+                    :cotizacionesproyecto.map(
                         cotizacion => (
                             <Cotizacion 
                                 cotizacion = {cotizacion}
